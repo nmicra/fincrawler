@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>-->
+
+    <springProfile name="dev">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+        <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+            <file>C:\temp\log\server.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>C:\temp\log\server.%d{yyyyMMddHHmmss}.%i.log</fileNamePattern>
+            </rollingPolicy>
+
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>10MB</maxFileSize>
+            </triggeringPolicy>
+            <encoder>
+                <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="DATA-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+            <file>C:\temp\log\data.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>C:\temp\log\data.%d{yyyyMMddHHmmss}.%i.log</fileNamePattern>
+            </rollingPolicy>
+
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>10MB</maxFileSize>
+            </triggeringPolicy>
+            <encoder>
+                <pattern>%msg%n</pattern>
+            </encoder>
+        </appender>
+
+
+        <logger name="analytics" level="DEBUG" additivity="false">
+            <appender-ref ref="DATA-FILE"/>
+        </logger>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ROLLING-FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+            <file>C:\temp\log\server.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>C:\temp\log\server.%d{yyyyMMddHHmmss}.%i.log</fileNamePattern>
+            </rollingPolicy>
+
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>10MB</maxFileSize>
+            </triggeringPolicy>
+            <encoder>
+                <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="DATA-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+            <file>C:\temp\log\data.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>C:\temp\log\data.%d{yyyyMMddHHmmss}.%i.log</fileNamePattern>
+            </rollingPolicy>
+
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>10MB</maxFileSize>
+            </triggeringPolicy>
+            <encoder>
+                <pattern>%msg%n</pattern>
+            </encoder>
+        </appender>
+
+
+        <logger name="analytics" level="DEBUG" additivity="false">
+            <appender-ref ref="DATA-FILE"/>
+        </logger>
+
+
+        <root level="ERROR">
+            <appender-ref ref="ROLLING-FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
