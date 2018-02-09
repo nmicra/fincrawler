@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<scope>provided</scope><!--delete provided if you want to package tomcat inside the artifact-->
+			<!--<scope>provided</scope>delete provided if you want to package tomcat inside the artifact-->
 		</dependency>
 
 		<dependency>
